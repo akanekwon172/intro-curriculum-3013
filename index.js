@@ -14,11 +14,13 @@ const server = http.createServer((req, res) => {
       case 'POST':
         res.write(`POST ${req.url}`);
         let rawData = '';
-        req.on('data', chunk => {
-          rawData = rawData + chunk;
-        }).on('end', () => {
-          console.info(`[${now}] Data posted: ${rawData}`);
-        });
+        req
+          .on('data', chunk => {
+            rawData += chunk;
+          })
+          .on('end', () => {
+            console.info(`[${now}] Data posted: ${rawData}`);
+          });
         break;
       case 'DELETE':
         res.write(`DELETE ${req.url}`);
@@ -27,9 +29,11 @@ const server = http.createServer((req, res) => {
         break;
     }
     res.end();
-  }).on('error', e => {
+  })
+  .on('error', e => {
     console.error(`[${new Date()}] Server Error`, e);
-  }).on('clientError', e => {
+  })
+  .on('clientError', e => {
     console.error(`[${new Date()}] Client Error`, e);
   });
 
