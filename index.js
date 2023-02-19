@@ -5,7 +5,7 @@ const server = http
     const now = new Date();
     console.info(`[${now}] Requested by ${req.socket.remoteAddress}`);
     res.writeHead(200, {
-      'Content-Type': 'text/plain; charset=utf-8'
+      'Content-Type': 'text/plain; charset=utf-8',
     });
 
     switch (req.method) {
@@ -22,6 +22,9 @@ const server = http
           .on('end', () => {
             console.info(`[${now}] Data posted: ${rawData}`);
           });
+        break;
+      case 'DELETE':
+        res.write(`DELETE ${req.url}`);
         break;
       default:
         break;
